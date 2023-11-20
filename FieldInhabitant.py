@@ -2,8 +2,6 @@
 # Date: Nov 20, 2023
 # Description: In this file we structure the data for the all the creatures in the field for the game.
 
-# FieldInhabitant.py
-
 class FieldInhabitant:
     def __init__(self, symbol):
         """
