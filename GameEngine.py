@@ -183,7 +183,7 @@ class GameEngine:
         new_y = self.captain.get_y() 
 
         # Check if new position is within field boundaries
-        if 0 <= new_y < len(self.field):
+        if 0 <= new_x < len(self.field[0]) and 0 <=new_y<len(self.field):
             current_object = self.field[new_x][new_y]
 
             # Check if new position is empty
@@ -218,14 +218,12 @@ class GameEngine:
         new_y = self.captain.get_y()+ horizontal_movement
 
         # Check if new position is within field boundaries
-        if 0 <= new_x < len(self.field[0]):
+        if 0 <= new_x < len(self.field[0]) and 0 <=new_y<len(self.field):
             current_object = self.field[new_x][new_y]
-
-            # Check if new position is empty
-            if current_object is None:
-                self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
-                self.captain.set_y(new_y)
-                self.field[new_x][new_y] = self.captain
+            
+            # Check if new position has a Rabbit object
+            if isinstance(current_object, Rabbit):
+                print("You should not step on the rabbits. Stay where you are.")
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
@@ -235,10 +233,19 @@ class GameEngine:
                 print(f"A delicious vegetable, {current_object.get_name()}, has been found!")
                 self.score += current_object.get_points()
                 self.field[new_x][new_y] = self.captain
+                
+            # Check if new position is empty
+            elif current_object is None:
+                self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
+                self.captain.set_y(new_y)
+                self.field[new_x][new_y] = self.captain
+                
+            else:
+                print("Captains movement is incorrect, (GameEngine.py)")
+                exit(0)
 
-            # Check if new position has a Rabbit object
-            elif isinstance(current_object, Rabbit):
-                print("You should not step on the rabbits. Stay where you are.")
+
+            
 
     def moveCaptain(self):
         """
