@@ -28,13 +28,4 @@ class Rabbit(Creature):
         self.set_x(new_x)
         self.set_y(new_y)
 
-    def interact_with_veggie(self, veggie):
-        """
-        Define the Rabbit's interaction with a vegetable (e.g., eating it).
-
-        :param veggie: Veggie, the vegetable that the Rabbit interacts with.
-        """
-        # Implementation depends on game rules, e.g., removing the veggie from the field
-        pass
-
-    # Additional methods and functionalities specific to the Rabbit can be added here.
+  

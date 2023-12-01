@@ -1,5 +1,3 @@
-# Creature.py
-
 from FieldInhabitant import FieldInhabitant
 
 class Creature(FieldInhabitant):
@@ -48,3 +46,4 @@ class Creature(FieldInhabitant):
         self.__y = y
 
     # Additional methods and functionalities specific to the Creature can be added here.
+
