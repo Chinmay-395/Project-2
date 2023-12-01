@@ -1,0 +1,841 @@
+chinmay  …/project-2   dev !?  20:24  python3 main.py 
+Enter the name of the veggie file: VeggieFile1.csv
+THE INITIAL FIELD
+[[None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None, None, None]]
+Welcome to the Veggie Garden Game!
+In this game, you are Captain Veggie, trying to collect as many vegetables as possible while avoiding rabbits.
+Your goal is to gather vegetables from the garden, each worth different point values, and achieve the highest score.
+
+List of Possible Vegetables:
+ - G: Garlic, Points: 5
+ - P: Potato, Points: 1
+ - O: Onion, Points: 3
+ - B: Bell Pepper, Points: 3
+ - T: Tomato, Points: 6
+ - C: Carrot, Points: 2
+
+Game Characters:
+ - Captain Veggie's Symbol: 'V'
+ - Rabbit's Symbol: 'R'
+
+Good luck, and watch out for those rabbits!
+
+Remaining Vegetables: 30
+Player's Score: 0
+######################
+#    V   C B        #
+#  G   P         G  #
+#          P   C    #
+#        R         C#
+#P P   B R R   T    #
+#  O         B O    #
+#G P   P           C#
+#T R   P       G B B#
+#    G     G T     R#
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 29
+Player's Score: 0
+######################
+#        C B        #
+#  G V P         G  #
+#          P   C    #
+#      R     R     C#
+#P P   R       T    #
+#  O         B O    #
+#G P   P           C#
+#T     P       G B B#
+#R   G     G T      #
+#P       G   C   R  #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 29
+Player's Score: 0
+######################
+#        C B        #
+#  G   P         G  #
+#    V     P   C    #
+#      R           C#
+#P P     R R   T    #
+#  O         B O    #
+#G P   P           C#
+#T R   P       G B B#
+#    G     G T      #
+#P       G   C     R#
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 28
+Player's Score: 0
+######################
+#        C B        #
+#  G   P         G  #
+#          P   C    #
+#    V R           C#
+#P P     R     T    #
+#  O       R B O    #
+#R P   P           C#
+#T     P       G B B#
+#    G     G T     R#
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): d
+You should not step on the rabbits. Stay where you are.
+
+Remaining Vegetables: 27
+Player's Score: 0
+######################
+#        C B        #
+#  G   P         G  #
+#        R P   C    #
+#    V             C#
+#P P     R   R T    #
+#  O         B O    #
+#R P   P           C#
+#T     P       G B R#
+#    G     G T      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 27
+Player's Score: 0
+######################
+#        C B        #
+#  G   P R       G  #
+#          P   C    #
+#          R       C#
+#P P V   R     T    #
+#  O         B O    #
+#R P   P           C#
+#T     P       G B R#
+#    G     G T      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): a
+A delicious vegetable, Potato, has been found!
+
+Remaining Vegetables: 25
+Player's Score: 1
+######################
+#        C R        #
+#  G   P         G  #
+#          P R C    #
+#                  C#
+#P V           T    #
+#R O   R     B O    #
+#  P   P           C#
+#T     P       G B R#
+#    G     G T      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): a
+A delicious vegetable, Potato, has been found!
+
+Remaining Vegetables: 23
+Player's Score: 2
+######################
+#        C R        #
+#  G   P         G  #
+#          P   R    #
+#                  C#
+#V     R       T    #
+#R O         B O    #
+#  P   P           C#
+#T     P       G B R#
+#    G     G T      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+You should not step on the rabbits. Stay where you are.
+
+Remaining Vegetables: 23
+Player's Score: 2
+######################
+#        C R        #
+#  G   P         G  #
+#          P        #
+#            R     C#
+#V R   R       T    #
+#  O         B O    #
+#  P   P           C#
+#T     P       G B R#
+#    G     G T      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 23
+Player's Score: 2
+######################
+#        C R        #
+#  G   P         G  #
+#          P        #
+#  R               C#
+#            R T    #
+#V O R       B O    #
+#  P   P           C#
+#T     P       G B  #
+#    G     G T   R  #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): d
+A delicious vegetable, Onion, has been found!
+
+Remaining Vegetables: 21
+Player's Score: 5
+######################
+#        C R        #
+#  G   P         G  #
+#          P        #
+#                  C#
+#R R       R   T    #
+#  V         B O    #
+#  P   P           C#
+#T     P       R B  #
+#    G     G T      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+Yummy! A delicious vegetable Potato
+
+Remaining Vegetables: 19
+Player's Score: 6
+######################
+#        C   R      #
+#  G   P         G  #
+#          P        #
+#            R     C#
+#R             T    #
+#    R       B O    #
+#  V   P           C#
+#T     P         B  #
+#    G     G R      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 19
+Player's Score: 6
+######################
+#        C R        #
+#  G   P         G  #
+#          P R      #
+#                  C#
+#              T    #
+#  R R       B O    #
+#      P           C#
+#T V   P         B  #
+#    G     G        #
+#P       G   C R    #
+######################
+Move Captain (W/A/S/D): a
+A delicious vegetable, Tomato, has been found!
+
+Remaining Vegetables: 18
+Player's Score: 12
+######################
+#        C          #
+#  G   P   R     G  #
+#          P R      #
+#                  C#
+#              T    #
+#  R R       B O    #
+#      P           C#
+#V     P         B  #
+#    G     G        #
+#P       G   C R    #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 17
+Player's Score: 12
+######################
+#        R          #
+#  G   P         G  #
+#          P        #
+#            R     C#
+#R             T    #
+#            B O    #
+#    R P           C#
+#      P         B  #
+#V   G     G R      #
+#P       G   C      #
+######################
+Move Captain (W/A/S/D): s
+Yummy! A delicious vegetable Potato
+
+Remaining Vegetables: 15
+Player's Score: 13
+######################
+#      R            #
+#  G   P         G  #
+#          R        #
+#                  C#
+#              T    #
+#R   R       B O    #
+#      P           C#
+#      P         B  #
+#    G     G        #
+#V       G R C      #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 15
+Player's Score: 13
+######################
+#      R            #
+#  G   P   R     G  #
+#                   #
+#                  C#
+#              T    #
+#            B O    #
+#  R R P           C#
+#      P         B  #
+#    G     G        #
+#  V     G R C      #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 15
+Player's Score: 13
+######################
+#        R          #
+#  G   P R       G  #
+#                   #
+#                  C#
+#              T    #
+#R   R       B O    #
+#      P           C#
+#      P         B  #
+#    G     G        #
+#    V   G R C      #
+######################
+Move Captain (W/A/S/D): w
+Yummy! A delicious vegetable Garlic
+
+Remaining Vegetables: 14
+Player's Score: 18
+######################
+#        R          #
+#  G   P         G  #
+#        R          #
+#                  C#
+#              T    #
+#  R         B O    #
+#  R   P           C#
+#      P         B  #
+#    V     G R      #
+#        G   C      #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 14
+Player's Score: 18
+######################
+#                   #
+#  G   P   R     G  #
+#                   #
+#      R           C#
+#    R         T    #
+#            B O    #
+#      P           C#
+#R     P     R   B  #
+#      V   G        #
+#        G   C      #
+######################
+Move Captain (W/A/S/D): w
+Yummy! A delicious vegetable Potato
+
+Remaining Vegetables: 13
+Player's Score: 19
+######################
+#                   #
+#  G   P         G  #
+#        R          #
+#      R           C#
+#  R           T    #
+#            B O    #
+#      P           C#
+#      V       R B  #
+#R         G        #
+#        G   C      #
+######################
+Move Captain (W/A/S/D): w
+Yummy! A delicious vegetable Potato
+
+Remaining Vegetables: 12
+Player's Score: 20
+######################
+#                   #
+#  G   P         G  #
+#      R   R        #
+#                  C#
+#              T    #
+#R           B O    #
+#      V           C#
+#              R B  #
+#          G        #
+#  R     G   C      #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 12
+Player's Score: 20
+######################
+#                   #
+#  G   P         G  #
+#        R R        #
+#                  C#
+#  R           T    #
+#            B O    #
+#        V         C#
+#                B  #
+#  R       G R      #
+#        G   C      #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 11
+Player's Score: 20
+######################
+#                   #
+#  G   R         G  #
+#                   #
+#            R     C#
+#              T    #
+#R           B O    #
+#                  C#
+#R       V       B  #
+#          G        #
+#        G R C      #
+######################
+Move Captain (W/A/S/D): s
+
+Remaining Vegetables: 11
+Player's Score: 20
+######################
+#                   #
+#  G             G  #
+#      R   R        #
+#                  C#
+#              T    #
+#  R         B O    #
+#                  C#
+#R               B  #
+#        V G        #
+#        G R C      #
+######################
+Move Captain (W/A/S/D): s
+Yummy! A delicious vegetable Garlic
+
+Remaining Vegetables: 10
+Player's Score: 25
+######################
+#                   #
+#  G   R         G  #
+#                   #
+#            R     C#
+#  R           T    #
+#            B O    #
+#                  C#
+#R               B  #
+#          G        #
+#        V R C      #
+######################
+Move Captain (W/A/S/D): d
+You should not step on the rabbits. Stay where you are.
+
+Remaining Vegetables: 10
+Player's Score: 25
+######################
+#    R              #
+#  G             G  #
+#                   #
+#          R       C#
+#              T    #
+#  R         B O    #
+#R                 C#
+#                B  #
+#        R G        #
+#        V   C      #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 10
+Player's Score: 25
+######################
+#                   #
+#  G   R         G  #
+#        R          #
+#                  C#
+#    R         T    #
+#            B O    #
+#                  C#
+#R               B  #
+#        R G        #
+#          V C      #
+######################
+Move Captain (W/A/S/D): w
+Yummy! A delicious vegetable Garlic
+
+Remaining Vegetables: 9
+Player's Score: 30
+######################
+#      R            #
+#  G             G  #
+#                   #
+#    R   R         C#
+#              T    #
+#            B O    #
+#                  C#
+#R               B  #
+#        R V        #
+#            C      #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 9
+Player's Score: 30
+######################
+#                   #
+#  G   R         G  #
+#                   #
+#                  C#
+#  R   R       T    #
+#            B O    #
+#  R               C#
+#      R         B  #
+#            V      #
+#            C      #
+######################
+Move Captain (W/A/S/D): s
+Yummy! A delicious vegetable Carrot
+
+Remaining Vegetables: 8
+Player's Score: 32
+######################
+#                   #
+#  G             G  #
+#      R            #
+#        R         C#
+#    R         T    #
+#            B O    #
+#    R   R         C#
+#                B  #
+#                   #
+#            V      #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 8
+Player's Score: 32
+######################
+#                   #
+#  G     R       G  #
+#                   #
+#        R         C#
+#              T    #
+#    R   R   B O    #
+#                  C#
+#      R         B  #
+#            V      #
+#                   #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 8
+Player's Score: 32
+######################
+#                   #
+#  G     R       G  #
+#        R          #
+#                  C#
+#      R       T    #
+#            B O    #
+#  R               C#
+#            V   B  #
+#        R          #
+#                   #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 8
+Player's Score: 32
+######################
+#      R            #
+#  G             G  #
+#                   #
+#          R       C#
+#              T    #
+#    R       B O    #
+#                  C#
+#R     R       V B  #
+#                   #
+#                   #
+######################
+Move Captain (W/A/S/D): d
+A delicious vegetable, Bell Pepper, has been found!
+
+Remaining Vegetables: 7
+Player's Score: 35
+######################
+#      R            #
+#  G             G  #
+#                   #
+#                  C#
+#          R   T    #
+#            B O    #
+#  R               C#
+#      R         V  #
+#  R                #
+#                   #
+######################
+Move Captain (W/A/S/D): w   
+
+Remaining Vegetables: 7
+Player's Score: 35
+######################
+#      R            #
+#  G             G  #
+#                   #
+#                  C#
+#          R   T    #
+#    R       B O    #
+#                V C#
+#R                  #
+#        R          #
+#                   #
+######################
+Move Captain (W/A/S/D): d
+A delicious vegetable, Carrot, has been found!
+
+Remaining Vegetables: 6
+Player's Score: 37
+######################
+#      R            #
+#  G             G  #
+#                   #
+#          R       C#
+#              T    #
+#  R         B O    #
+#R                 V#
+#                   #
+#                   #
+#        R          #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 6
+Player's Score: 37
+######################
+#    R              #
+#  G             G  #
+#                   #
+#          R       C#
+#R             T    #
+#            B O   V#
+#                   #
+#  R                #
+#      R            #
+#                   #
+######################
+Move Captain (W/A/S/D): a
+
+Remaining Vegetables: 6
+Player's Score: 37
+######################
+#    R              #
+#  G             G  #
+#                   #
+#        R         C#
+#R             T    #
+#            B O V  #
+#                   #
+#                   #
+#  R R              #
+#                   #
+######################
+Move Captain (W/A/S/D): a
+A delicious vegetable, Onion, has been found!
+
+Remaining Vegetables: 5
+Player's Score: 40
+######################
+#    R              #
+#  G             G  #
+#          R        #
+#                  C#
+#              T    #
+#R           B V    #
+#                   #
+#                   #
+#R                  #
+#  R                #
+######################
+Move Captain (W/A/S/D): a
+A delicious vegetable, Bell Pepper, has been found!
+
+Remaining Vegetables: 4
+Player's Score: 43
+######################
+#                   #
+#  G   R         G  #
+#        R          #
+#                  C#
+#  R           T    #
+#            V      #
+#                   #
+#  R                #
+#                   #
+#    R              #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 4
+Player's Score: 43
+######################
+#                   #
+#  G             G  #
+#    R              #
+#      R           C#
+#  R         V T    #
+#                   #
+#                   #
+#R                  #
+#      R            #
+#                   #
+######################
+Move Captain (W/A/S/D): d
+A delicious vegetable, Tomato, has been found!
+
+Remaining Vegetables: 3
+Player's Score: 49
+######################
+#                   #
+#  G             G  #
+#                   #
+#R R     R         C#
+#              V    #
+#                   #
+#                   #
+#R                  #
+#                   #
+#      R            #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 3
+Player's Score: 49
+######################
+#                   #
+#  G             G  #
+#R         R        #
+#R             V   C#
+#                   #
+#                   #
+#                   #
+#R                  #
+#                   #
+#      R            #
+######################
+Move Captain (W/A/S/D): d
+
+Remaining Vegetables: 2
+Player's Score: 49
+######################
+#                   #
+#  R             G  #
+#                   #
+#            R   V C#
+#  R                #
+#                   #
+#R                  #
+#                   #
+#                   #
+#      R            #
+######################
+Move Captain (W/A/S/D): d
+A delicious vegetable, Carrot, has been found!
+
+Remaining Vegetables: 1
+Player's Score: 51
+######################
+#                   #
+#                G  #
+#  R                #
+#R             R   V#
+#                   #
+#R                  #
+#                   #
+#                   #
+#                   #
+#      R            #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 1
+Player's Score: 51
+######################
+#                   #
+#                G  #
+#            R     V#
+#R R                #
+#                   #
+#R                  #
+#                   #
+#                   #
+#                   #
+#      R            #
+######################
+Move Captain (W/A/S/D): w
+
+Remaining Vegetables: 1
+Player's Score: 51
+######################
+#                   #
+#                G V#
+#  R                #
+#R           R      #
+#                   #
+#R                  #
+#                   #
+#                   #
+#                   #
+#      R            #
+######################
+Move Captain (W/A/S/D): a
+A delicious vegetable, Garlic, has been found!
+
+Game Over!
+Congratulations on completing the game.
+
+Vegetables Harvested:
+ - Potato
+ - Potato
+ - Onion
+ - Potato
+ - Tomato
+ - Potato
+ - Garlic
+ - Potato
+ - Potato
+ - Garlic
+ - Garlic
+ - Carrot
+ - Bell Pepper
+ - Carrot
+ - Onion
+ - Bell Pepper
+ - Tomato
+ - Carrot
+ - Garlic
+
+Your Final Score: 56
+Enter your initials: CD
+
+High Scores:
+CD: 56

@@ -1,5 +1,6 @@
-
-# FieldInhabitant.py
+# Author: Chinmay Dali, Kartikey Singh
+# Date: Nov 20, 2023
+# Description: In this file we structure the data for the all the creatures in the field for the game.
 
 class FieldInhabitant:
     def __init__(self, symbol):
