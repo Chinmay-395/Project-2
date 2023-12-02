@@ -34,15 +34,17 @@ class Captain(Creature):
         """
         return self.__collected_veggies
 
-    # def move(self, dx, dy):
-    #     """
-    #     Move the Captain by a specified amount in the x and y directions.
-
-    #     :param dx: int, the amount to move in the x-direction.
-    #     :param dy: int, the amount to move in the y-direction.
-    #     """
-    #     self.set_x(self.get_x() + dx)
-    #     self.set_y(self.get_y() + dy)
+    def dropVeggie(self):
+        """
+        If the snake ever attempts to move into the same position as the
+        captain, the captain loses the last five vegetables that were added to their basket
+        """
+        print("Captain in contact with snake ")
+        for _ in range(5):# Removes the last 5 element
+            the_dropped_veg = self.__collected_veggies.pop()  
+            print(f"Dropped veggie {the_dropped_veg} ")
+        
+            
 
     # def display_status(self):
     #     """
