@@ -41,8 +41,9 @@ class Captain(Creature):
         """
         print("Captain in contact with snake ")
         for _ in range(5):# Removes the last 5 element
-            the_dropped_veg = self.__collected_veggies.pop()  
-            print(f"Dropped veggie {the_dropped_veg} ")
+            if len(self.__collected_veggies)>0:
+                the_dropped_veg = self.__collected_veggies.pop()  
+                print(f"Dropped veggie {the_dropped_veg} ")
         
             
 
