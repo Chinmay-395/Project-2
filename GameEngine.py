@@ -35,7 +35,8 @@ class GameEngine:
         The field is initialized to a 2D list based on the file, and Veggie objects are added at random locations.
         """
         while True:
-            veggie_file = input("Enter the name of the veggie file: ")
+            #this is for debugging purposes
+            veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" #input("Enter the name of the veggie file: ")
             try:
                 with open(veggie_file, 'r') as file:
                     lines = file.readlines()
@@ -359,22 +360,26 @@ class GameEngine:
         """
         directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
         best_move = None
-        min_distance = float(1e9)
+        min_distance = 1e9
 
         # Find the move that brings the snake closest to the captain
         for dx, dy in directions:
             new_x, new_y = self.snake.get_x() + dx, self.snake.get_y() + dy
             if 0 <= new_x < len(self.field) and 0 <= new_y < len(self.field[0]):  # Check if within field
-                if not (isinstance(self.field[new_x][new_y], Veggie) or isinstance(self.field[new_x][new_y], Rabbit)):
-                    distance = abs(new_x - self.captain.get_x()) + abs(new_y - self.captain.get_y())
-                    if distance < min_distance:
-                        min_distance = distance
-                        best_move = (new_x, new_y)
+                # if not (isinstance(self.field[new_x][new_y], Veggie) or isinstance(self.field[new_x][new_y], Rabbit)):
+                distance = abs(new_x - self.captain.get_x()) + abs(new_y - self.captain.get_y())
+                if distance < min_distance:
+                    min_distance = distance
+                    best_move = (new_x, new_y)
 
         if best_move:
             new_x, new_y = best_move
+            #forfiet the move if rabbit and veggie
+            print(f"THE NEW LOCATION OF THE SNAKE IS X:{new_x} Y:{new_y}")
+            if (isinstance(self.field[new_x][new_y], Rabbit)) or (isinstance(self.field[new_x][new_y], Veggie)):
+                pass
             # If snake moves to captain's position
-            if (new_x, new_y) == (self.captain.get_x(), self.captain.get_y()):
+            elif (isinstance(self.field[new_x][new_y], Captain)):
                 print(f"Captain in contact with snake at {new_x} {new_y}")
                 the_veggie_list = self.captain.get_collected_veggies()
                 for _ in range(5):# Removes the last 5 element
@@ -385,7 +390,7 @@ class GameEngine:
                 self.captain.dropVeggie()  # Remove the last 5 veggies
                 
                 self.resetSnake()  # to reset snake to a new random position
-            else:
+            else: # the only thing that is remaining is None in the else case
                 # Move the snake
                 self.field[self.snake.get_x()][self.snake.get_y()] = None  # Clear the old position
                 self.snake.set_x(new_x)
