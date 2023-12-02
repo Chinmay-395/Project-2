@@ -39,12 +39,8 @@ class Captain(Creature):
         If the snake ever attempts to move into the same position as the
         captain, the captain loses the last five vegetables that were added to their basket
         """
-        print("Captain in contact with snake ")
-        for _ in range(5):# Removes the last 5 element
-            if len(self.__collected_veggies)>0:
-                the_dropped_veg = self.__collected_veggies.pop()  
-                print(f"Dropped veggie {the_dropped_veg} ")
         
+        self.__collected_veggies = self.__collected_veggies[:-5]
             
 
     # def display_status(self):

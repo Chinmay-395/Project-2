@@ -6,4 +6,10 @@
 from Creature import Creature
 class Snake(Creature):
     def __init__(self, x, y):
-        super().__init__(x, y, 'S')
+        """
+        Initialize a Snake object with specified x and y coordinates.
+
+        :param x: int, the x-coordinate of the Snake on the field.
+        :param y: int, the y-coordinate of the Snake on the field.
+        """
+        super().__init__(x, y, "S")

@@ -9,6 +9,7 @@ import pickle
 from Veggie import Veggie
 from Captain import Captain
 from Rabbit import Rabbit
+from Snake import Snake
 
 class GameEngine:
     NUMBEROFVEGGIES = 30
@@ -24,6 +25,7 @@ class GameEngine:
         self.captain = None  # A single Captain object
         self.possible_veggies = []  # List of possible Veggie objects in the field
         self.score = 0  # The player's current score
+        self.snake = None # the snake is a single object in the entire game
 
         # Additional initialization logic can be added here
 
@@ -92,6 +94,24 @@ class GameEngine:
                     self.rabbits.append(rabbit)
                     self.field[x][y] = rabbit
                     break
+    
+    def initSnake(self):
+        """
+        Initialize Snake objects in the game. A random location is chosen.
+        If the chosen location is occupied, a new location is selected until an empty one is found.
+        The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
+        """
+        field_width = len(self.field[0])
+        field_height = len(self.field)
+
+        while True:
+            x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
+            if self.field[x][y] is None:
+                self.snake = Snake(x, y)
+                self.field[x][y] = self.snake
+                break
+
+    
 
     def initializeGame(self):
         """
@@ -100,6 +120,7 @@ class GameEngine:
         self.initVeggies()
         self.initCaptain()
         self.initRabbits()
+        self.initSnake()
 
     def remainingVeggies(self):
         """
@@ -159,6 +180,9 @@ class GameEngine:
         
         :Returns (int): the current score accumulated by the user
         """
+        for veg in self.captain.get_collected_veggies():
+            if isinstance(veg, Veggie):
+                self.score += veg.get_points()
         return self.score
 
     def moveRabbits(self):
@@ -222,7 +246,7 @@ class GameEngine:
                 self.captain.set_x(new_x)
                 self.captain.addVeggie(current_object)
                 print(f"Yummy! A delicious vegetable {current_object.get_name()}")
-                self.score += current_object.get_points()
+                # self.score += current_object.get_points()
                 self.field[new_x][new_y] = self.captain
 
             # Check if new position has a Rabbit object
@@ -248,6 +272,9 @@ class GameEngine:
             # Check if new position has a Rabbit object
             if isinstance(current_object, Rabbit):
                 print("You should not step on the rabbits. Stay where you are.")
+                
+            elif isinstance(current_object, Snake):
+                print("You should not step on the snake. Stay where you are.")
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
@@ -255,7 +282,7 @@ class GameEngine:
                 self.captain.set_y(new_y)
                 self.captain.addVeggie(current_object)
                 print(f"A delicious vegetable, {current_object.get_name()}, has been found!")
-                self.score += current_object.get_points()
+                # self.score += current_object.get_points()
                 self.field[new_x][new_y] = self.captain
                 
             # Check if new position is empty
@@ -303,8 +330,69 @@ class GameEngine:
                 print("Cannot move that way. The edge of the field is there.")
 
         else:
-            print("Invalid input. Please use W, A, S, or D for movement.")
+            print("Invalid input. Please use 'W or w', 'A or a', 'S or s', OR 'D or d' for movement.")
 
+
+    def resetSnake(self):
+        """
+        Reset the snake to a new random, unoccupied position on the field.
+        """
+        field_width = len(self.field[0])
+        field_height = len(self.field)
+
+        while True:
+            x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
+            if self.field[x][y] is None:
+                self.field[self.snake.get_x()][self.snake.get_y()] = None  # Clear the old position
+                self.snake.set_x(x)
+                self.snake.set_y(y)
+                self.field[x][y] = self.snake
+                break
+        
+    def moveSnake(self):
+        """
+        The snake can only move up, down, left, or right (not diagonally), cannot move out of the field, 
+        and cannot move into a space occupied by a vegetable or a rabbit. When the snake moves, it must always try to move closer
+        to the captain object’s position. If the snake ever attempts to move into the same position as the
+        captain, the captain loses the last five vegetables that were added to their basket and the snake is
+        reset to a new random, unoccupied position on the field.
+        """
+        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        best_move = None
+        min_distance = float(1e9)
+
+        # Find the move that brings the snake closest to the captain
+        for dx, dy in directions:
+            new_x, new_y = self.snake.get_x() + dx, self.snake.get_y() + dy
+            if 0 <= new_x < len(self.field) and 0 <= new_y < len(self.field[0]):  # Check if within field
+                if not (isinstance(self.field[new_x][new_y], Veggie) or isinstance(self.field[new_x][new_y], Rabbit)):
+                    distance = abs(new_x - self.captain.get_x()) + abs(new_y - self.captain.get_y())
+                    if distance < min_distance:
+                        min_distance = distance
+                        best_move = (new_x, new_y)
+
+        if best_move:
+            new_x, new_y = best_move
+            # If snake moves to captain's position
+            if (new_x, new_y) == (self.captain.get_x(), self.captain.get_y()):
+                print(f"Captain in contact with snake at {new_x} {new_y}")
+                the_veggie_list = self.captain.get_collected_veggies()
+                for _ in range(5):# Removes the last 5 element
+                    if len(the_veggie_list)>0:
+                        the_dropped_veg = the_veggie_list.pop()  
+                        self.score -= the_dropped_veg.get_points()
+                        print(f"Dropped veggie {the_dropped_veg} ")
+                self.captain.dropVeggie()  # Remove the last 5 veggies
+                
+                self.resetSnake()  # to reset snake to a new random position
+            else:
+                # Move the snake
+                self.field[self.snake.get_x()][self.snake.get_y()] = None  # Clear the old position
+                self.snake.set_x(new_x)
+                self.snake.set_y(new_y)
+                self.field[new_x][new_y] = self.snake
+                    
+                        
     def gameOver(self):
         """
         Display the game over message, list all harvested vegetables, and show the player's final score.

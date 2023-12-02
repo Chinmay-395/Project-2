@@ -25,16 +25,21 @@ def main():
     # Game loop
     while remaining_veggies > 0:
         print(f"\nRemaining Vegetables: {remaining_veggies}")
-        print(f"Player's Score: {game.score}")
+        print(f"Player's Score: {game.getScore()}")
 
         # Print out the field
         game.printField()
         
         # Move the captain
         game.moveCaptain() #ask professor about this
+        
+        # Move the snake
+        game.moveSnake()
 
         # Move the rabbits
         game.moveRabbits()
+        
+        
 
         
 
