@@ -206,7 +206,7 @@ class GameEngine:
                 # If a Rabbit object attempts to move into a space occupied by another Rabbit
                 # object or a Captain object it will forfeit its move
                 # Check for other Rabbits or the Captain at the new location
-                if not (isinstance(self.field[new_x][new_y], Rabbit) or isinstance(self.field[new_x][new_y], Captain)):
+                if not (isinstance(self.field[new_x][new_y], Rabbit) or isinstance(self.field[new_x][new_y], Captain)) or isinstance(self.field[new_x][new_y], Snake)):
                     # If a Rabbit object moves into a space occupied by a Veggie object, that
                     # Veggie object is removed from field, and the Rabbit object will take its
                     # place in field
