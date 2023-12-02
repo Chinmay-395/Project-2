@@ -14,8 +14,8 @@ class Captain(Creature):
         :param x: int, the x-coordinate of the Captain on the field.
         :param y: int, the y-coordinate of the Captain on the field.
         """
-        super().__init__(x, y, "V")  # Assuming "C" is the symbol for the Captain
-        self.__collected_veggies = []  # A list to store collected vegetables
+        super().__init__(x, y, "V")  # "V" is the symbol for the Captain
+        self.__collected_veggies = []  # A list to store, collected vegetables
 
     def addVeggie(self, veggie):
         """
@@ -34,22 +34,22 @@ class Captain(Creature):
         """
         return self.__collected_veggies
 
-    def move(self, dx, dy):
-        """
-        Move the Captain by a specified amount in the x and y directions.
+    # def move(self, dx, dy):
+    #     """
+    #     Move the Captain by a specified amount in the x and y directions.
 
-        :param dx: int, the amount to move in the x-direction.
-        :param dy: int, the amount to move in the y-direction.
-        """
-        self.set_x(self.get_x() + dx)
-        self.set_y(self.get_y() + dy)
+    #     :param dx: int, the amount to move in the x-direction.
+    #     :param dy: int, the amount to move in the y-direction.
+    #     """
+    #     self.set_x(self.get_x() + dx)
+    #     self.set_y(self.get_y() + dy)
 
-    def display_status(self):
-        """
-        Display the current status of the Captain, including collected veggies.
-        """
-        print(f"Captain's Position: ({self.get_x()}, {self.get_y()})")
-        print("Collected Veggies:")
-        for veggie in self.__collected_veggies:
-            print(f" - {veggie}")
+    # def display_status(self):
+    #     """
+    #     Display the current status of the Captain, including collected veggies.
+    #     """
+    #     print(f"Captain's Position: ({self.get_x()}, {self.get_y()})")
+    #     print("Collected Veggies:")
+    #     for veggie in self.__collected_veggies:
+    #         print(f" - {veggie}")
 

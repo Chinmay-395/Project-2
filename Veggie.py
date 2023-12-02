@@ -1,4 +1,6 @@
-# Veggie.py
+# Author: Chinmay Dali, Kartikey Singh
+# Date: Nov 20, 2023
+# Description: The game includes a field wherein veggies are the points the user collects. 
 
 from FieldInhabitant import FieldInhabitant
 
@@ -10,9 +12,9 @@ class Veggie(FieldInhabitant):
         :param symbol: A character representing the text symbol for the vegetable.
         :param points: An integer representing the number of points the vegetable is worth.
         """
-        super().__init__(symbol)
-        self.__name = name
-        self.__points = points
+        super().__init__(symbol) #symbol from fieldInhabitants
+        self.__name = name  #name
+        self.__points = points #points value
 
     def __str__(self):
         """

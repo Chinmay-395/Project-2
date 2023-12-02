@@ -1,4 +1,7 @@
-# Creature.py
+# Author: Chinmay Dali, Kartikey Singh
+# Date: Nov 20, 2023
+# Description: The creature class will define the co-ordinates of the inhabitants of the field inside the 
+# field layout
 
 from FieldInhabitant import FieldInhabitant
 
@@ -11,9 +14,9 @@ class Creature(FieldInhabitant):
         :param y: int, the y-coordinate of the creature on the field.
         :param symbol: str, a single character representing the creature on the field.
         """
-        super().__init__(symbol)
-        self.__x = x
-        self.__y = y
+        super().__init__(symbol)#super class constructor is called
+        self.__x = x #the x co-ordinate of the creature
+        self.__y = y #the y co-ordinate of the creature
 
     def get_x(self):
         """
@@ -46,5 +49,3 @@ class Creature(FieldInhabitant):
         :param y: int, the new y-coordinate of the creature.
         """
         self.__y = y
-
-    # Additional methods and functionalities specific to the Creature can be added here.

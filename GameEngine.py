@@ -22,7 +22,7 @@ class GameEngine:
         self.field = []  # A 2D list representing the game field
         self.rabbits = []  # List of Rabbit objects in the game
         self.captain = None  # A single Captain object
-        self.possible_veggies = []  # List of possible Veggie objects
+        self.possible_veggies = []  # List of possible Veggie objects in the field
         self.score = 0  # The player's current score
 
         # Additional initialization logic can be added here
@@ -40,17 +40,18 @@ class GameEngine:
                     the_field_line = lines[0].strip().split(',')
                     field_dimensions = [int(the_field_line[1]),int(the_field_line[2])]#the x,y plane
                     self.field = [[None for _ in range(field_dimensions[1])] for _ in range(field_dimensions[0])]
-                    print("THE INITIAL FIELD")
-                    print(self.field)#should be a 2D list of None
                     # Initialize the list of possible vegetables
                     for line in lines[1:]:
                         name, symbol, points = line.strip().split(',')
-                        self.possible_veggies.append(Veggie(name, symbol, int(points)))
+                        the_veggie_obj = Veggie(name, symbol, int(points))
+                        self.possible_veggies.append(the_veggie_obj)
 
                     # Randomly place vegetables on the field
                     for _ in range(GameEngine.NUMBEROFVEGGIES):
                         veggie = random.choice(self.possible_veggies)
                         while True:
+                            #If a chosen random location is occupied by another Veggie object, repeatedly
+                            #choose a new location until an empty location is found
                             x, y = random.randint(0, field_dimensions[0] - 1), random.randint(0, field_dimensions[1] - 1)
                             if self.field[x][y] is None:
                                 self.field[x][y] = veggie
@@ -118,10 +119,17 @@ class GameEngine:
         Display the introduction to the game, including the welcome message, game premise, goals,
         and information about the vegetables, Captain, and rabbits.
         """
-        print("Welcome to the Veggie Garden Game!")
-        print("In this game, you are Captain Veggie, trying to collect as many vegetables as possible while avoiding rabbits.")
+        print("Welcome to Captain Veggie!")
+        print("The rabbits have invaded your garden and you must harvest ")
+        print("as many vegetables as possible before the rabbits eat them ")
+        print("all! Each vegetable is worth a different number of points")
+        
+        
+        print("In this game, you are Captain Veggie, trying to collect as many vegetables as possible while avoiding rabbits and snakes.")
         print("Your goal is to gather vegetables from the garden, each worth different point values, and achieve the highest score.\n")
 
+        print("so go for the high score!")
+        
         print("List of Possible Vegetables:")
         for veggie in self.possible_veggies:
             print(f" - {veggie.get_symbol()}: {veggie.get_name()}, Points: {veggie.get_points()}")
@@ -144,6 +152,14 @@ class GameEngine:
 
         # Print the bottom border
         print("#" + "#" * (len(self.field[0]) * 2) + "#")
+        
+    def getScore(self):
+        """
+        that takes in no parameters and returns the current score
+        
+        :Returns (int): the current score accumulated by the user
+        """
+        return self.score
 
     def moveRabbits(self):
         """
@@ -151,6 +167,8 @@ class GameEngine:
         Rabbits cannot move outside the field boundaries or into spaces occupied by other Rabbits or the Captain.
         If a Rabbit moves into a space occupied by a Veggie, the Veggie is removed and the Rabbit takes its place.
         """
+        #the rabbit could move 1 space up, down, left, right, any diagonal direction,
+        #or possibly not move at all
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1), (0, 0)]  # Includes all 8 directions and no move
         field_width = len(self.field[0])
         field_height = len(self.field)
@@ -158,13 +176,19 @@ class GameEngine:
         for rabbit in self.rabbits:
             dx, dy = random.choice(directions)
             new_x, new_y = rabbit.get_x() + dx, rabbit.get_y() + dy
-
-            # Check for field boundaries
-            if 0 <= new_x < field_width and 0 <= new_y < field_height:
+            #Rabbit object attempts to move outside the boundaries of field it will
+            #forfeit its move
+            if 0 <= new_x < field_width and 0 <= new_y < field_height: # Check for field boundaries
+                # If a Rabbit object attempts to move into a space occupied by another Rabbit
+                # object or a Captain object it will forfeit its move
                 # Check for other Rabbits or the Captain at the new location
                 if not (isinstance(self.field[new_x][new_y], Rabbit) or isinstance(self.field[new_x][new_y], Captain)):
+                    # If a Rabbit object moves into a space occupied by a Veggie object, that
+                    # Veggie object is removed from field, and the Rabbit object will take its
+                    # place in field
                     # If moving to a Veggie, remove it from the field
                     if isinstance(self.field[new_x][new_y], Veggie):
+                        print(f"RABBIT ATE THE VEGGIE AT X:{new_x} and Y:{new_y}")
                         self.field[new_x][new_y] = None
 
                     # Move the rabbit
