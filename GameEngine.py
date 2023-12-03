@@ -207,7 +207,10 @@ class GameEngine:
                 # If a Rabbit object attempts to move into a space occupied by another Rabbit
                 # object or a Captain object it will forfeit its move
                 # Check for other Rabbits or the Captain or Snake at the new location
-                if not (isinstance(self.field[new_x][new_y], Rabbit) or isinstance(self.field[new_x][new_y], Captain)) or (isinstance(self.field[new_x][new_y], Snake)):
+                if not (isinstance(self.field[new_x][new_y], Rabbit) or 
+                        isinstance(self.field[new_x][new_y], Captain) or 
+                        isinstance(self.field[new_x][new_y], Snake)
+                        ):
                     # If a Rabbit object moves into a space occupied by a Veggie object, that
                     # Veggie object is removed from field, and the Rabbit object will take its
                     # place in field
@@ -373,14 +376,18 @@ class GameEngine:
                     best_move = (new_x, new_y)
 
         if best_move:
-            new_x, new_y = best_move
+            final_x, final_y = best_move
             #forfiet the move if rabbit and veggie
-            print(f"THE NEW LOCATION OF THE SNAKE IS X:{new_x} Y:{new_y}")
-            if (isinstance(self.field[new_x][new_y], Rabbit)) or (isinstance(self.field[new_x][new_y], Veggie)):
+            print(f"THE NEW LOCATION OF THE SNAKE IS X:{final_x} Y:{final_y}")
+            if (isinstance(self.field[final_x][final_y], Rabbit)) or (isinstance(self.field[final_x][final_y], Veggie)):
+                # the original position of the 
+                print("snake encounter rabbit/veggie")
+                final_x, final_y = self.snake.get_x(), self.snake.get_y()
+                self.field[final_x][final_y] = self.snake
                 pass
             # If snake moves to captain's position
-            elif (isinstance(self.field[new_x][new_y], Captain)):
-                print(f"Captain in contact with snake at {new_x} {new_y}")
+            elif (isinstance(self.field[final_x][final_y], Captain)):
+                print(f"Captain in contact with snake at {final_x} {final_y}")
                 the_veggie_list = self.captain.get_collected_veggies()
                 for _ in range(5):# Removes the last 5 element
                     if len(the_veggie_list)>0:
@@ -393,9 +400,9 @@ class GameEngine:
             else: # the only thing that is remaining is None in the else case
                 # Move the snake
                 self.field[self.snake.get_x()][self.snake.get_y()] = None  # Clear the old position
-                self.snake.set_x(new_x)
-                self.snake.set_y(new_y)
-                self.field[new_x][new_y] = self.snake
+                self.snake.set_x(final_x)
+                self.snake.set_y(final_y)
+                self.field[final_x][final_y] = self.snake
                     
                         
     def gameOver(self):
