@@ -36,7 +36,8 @@ class GameEngine:
         """
         while True:
             #this is for debugging purposes
-            veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" #input("Enter the name of the veggie file: ")
+            veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" 
+            #input("Enter the name of the veggie file: ")
             try:
                 with open(veggie_file, 'r') as file:
                     lines = file.readlines()
@@ -181,9 +182,9 @@ class GameEngine:
         
         :Returns (int): the current score accumulated by the user
         """
-        for veg in self.captain.get_collected_veggies():
-            if isinstance(veg, Veggie):
-                self.score += veg.get_points()
+        # for veg in self.captain.get_collected_veggies():
+        #     if isinstance(veg, Veggie):
+        #         self.score += veg.get_points()
         return self.score
 
     def moveRabbits(self):
@@ -238,6 +239,13 @@ class GameEngine:
         if 0 <= new_x < len(self.field[0]) and 0 <=new_y<len(self.field):
             current_object = self.field[new_x][new_y]
 
+            # Check if new position has a Rabbit object
+            if isinstance(current_object, Rabbit):
+                print("You should not step on the rabbits. Stay where you are.")
+                
+            elif isinstance(current_object, Snake):
+                pass
+
             # Check if new position is empty
             if current_object is None:
                 self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
@@ -257,7 +265,7 @@ class GameEngine:
             elif isinstance(current_object, Rabbit):
                 print("You should not step on the rabbits. Stay where you are.")
             else:
-                print("Something went wrong")
+                print("Captain movement is incorrect")
                 exit(-1)
 
     def moveCptHorizontal(self, horizontal_movement):
@@ -278,7 +286,8 @@ class GameEngine:
                 print("You should not step on the rabbits. Stay where you are.")
                 
             elif isinstance(current_object, Snake):
-                print("You should not step on the snake. Stay where you are.")
+                pass
+                # print("You should not step on the snake. Stay where you are.")
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
@@ -296,8 +305,8 @@ class GameEngine:
                 self.field[new_x][new_y] = self.captain
                 
             else:
-                print("Captains movement is incorrect, (GameEngine.py)")
-                exit(0)
+                print("Captains movement is incorrect")
+                exit(-1)
 
 
             
