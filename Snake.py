@@ -9,7 +9,9 @@ class Snake(Creature):
         """
         Initialize a Snake object with specified x and y coordinates.
 
-        :param x: int, the x-coordinate of the Snake on the field.
-        :param y: int, the y-coordinate of the Snake on the field.
+        :param the x-coordinate of the Snake on the field.
+        :type x: int
+        :param the y-coordinate of the Snake on the field.
+        :type y: int
         """
         super().__init__(x, y, "S")

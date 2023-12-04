@@ -10,9 +10,12 @@ class Creature(FieldInhabitant):
         """
         Initialize a Creature object with specified x and y coordinates and a symbol.
 
-        :param x: int, the x-coordinate of the creature on the field.
-        :param y: int, the y-coordinate of the creature on the field.
-        :param symbol: str, a single character representing the creature on the field.
+        :param x: the x-coordinate of the creature on the field.
+        : type x:int
+        :param y: the y-coordinate of the creature on the field.
+        : type y:int
+        :param symbol: a single character representing the creature on the field.
+        : type symbol:str
         """
         super().__init__(symbol)#super class constructor is called
         self.__x = x #the x co-ordinate of the creature
@@ -30,7 +33,8 @@ class Creature(FieldInhabitant):
         """
         Set or update the x-coordinate of the creature.
 
-        :param x: int, the new x-coordinate of the creature.
+        :param x: the new x-coordinate of the creature.
+        : type x:int
         """
         self.__x = x
 
@@ -46,6 +50,7 @@ class Creature(FieldInhabitant):
         """
         Set or update the y-coordinate of the creature.
 
-        :param y: int, the new y-coordinate of the creature.
+        :param y: the new y-coordinate of the creature.
+        : type y:int
         """
         self.__y = y

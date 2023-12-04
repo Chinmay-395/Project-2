@@ -223,7 +223,7 @@ class GameEngine:
                     # place in field
                     # If moving to a Veggie, remove it from the field
                     if isinstance(self.__field[new_x][new_y], Veggie):
-                        print(f"RABBIT ATE THE VEGGIE AT X:{new_x} and Y:{new_y}")
+                        # print(f"RABBIT ATE THE VEGGIE AT X:{new_x} and Y:{new_y}")
                         self.__field[new_x][new_y] = None
 
                     # Move the rabbit
@@ -259,7 +259,7 @@ class GameEngine:
         """
         new_x = self.__captain.get_x()+ vertical_movement
         new_y = self.__captain.get_y() 
-        print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
+        # print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
         # Check if new position is within field boundaries
         if 0 <= new_x < len(self.__field) and 0 <=new_y<len(self.__field[0]):
             current_object = self.__field[new_x][new_y]
@@ -269,7 +269,7 @@ class GameEngine:
                 print("You should not step on the rabbits. Stay where you are.")
                 
             elif (isinstance(current_object, Snake)):
-                print("Moved into place occupied by snake.(Vertical)")
+                # print("Moved into place occupied by snake.(Vertical)")
                 self.capMovedIntoSnake(new_x,new_y)
                 
             elif (current_object is None):
@@ -299,7 +299,7 @@ class GameEngine:
         """
         new_x = self.__captain.get_x() 
         new_y = self.__captain.get_y()+ horizontal_movement
-        print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
+        # print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
         # Check if new position is within field boundaries
         if 0 <= new_x < len(self.__field) and 0 <=new_y<len(self.__field[0]):
             current_object = self.__field[new_x][new_y]
@@ -309,7 +309,7 @@ class GameEngine:
                 print("You should not step on the rabbits. Stay where you are.")
                 
             elif isinstance(current_object, Snake):
-                print("Moved into place occupied by snake.(Horizontal)")
+                # print("Moved into place occupied by snake.(Horizontal)")
                 self.capMovedIntoSnake(new_x,new_y)
                 
             elif (current_object is None):
@@ -427,7 +427,7 @@ class GameEngine:
         if best_move:
             final_x, final_y = best_move
             #forfiet the move if rabbit and veggie
-            print(f"THE NEW LOCATION OF THE SNAKE IS X:{final_x} Y:{final_y}")
+            # print(f"THE NEW LOCATION OF THE SNAKE IS X:{final_x} Y:{final_y}")
             if (isinstance(self.__field[final_x][final_y], Rabbit)) or (isinstance(self.__field[final_x][final_y], Veggie)):
                 final_x, final_y = self.__snake.get_x(), self.__snake.get_y()
                 self.__field[final_x][final_y] = self.__snake
@@ -435,11 +435,11 @@ class GameEngine:
             # If snake moves to captain's position
             elif (isinstance(self.__field[final_x][final_y], Captain)):
                 #captain moved into the position of snake
-                if min_distance == 0 or ((final_x == self.__captain.get_x()) and (final_y==self.__captain.get_y())):
-                    print(f"Cap moved into snake at X:{final_x} Y:{final_y}")
+                # if min_distance == 0 or ((final_x == self.__captain.get_x()) and (final_y==self.__captain.get_y())):
+                #     print(f"Cap moved into snake at X:{final_x} Y:{final_y}")
                     
-                else:    
-                    print(f"Snake moved to captain with snake at X:{final_x} Y:{final_y}")
+                # else:    
+                #     print(f"Snake moved to captain with snake at X:{final_x} Y:{final_y}")
                 the_veggie_list = self.__captain.get_collected_veggies()
                 for _ in range(5):# Removes the last 5 element
                     if len(the_veggie_list)>0:

@@ -7,6 +7,7 @@ class FieldInhabitant:
         """
         Constructor for the FieldInhabitant class.
         :param symbol: A character representing the text symbol for the field inhabitant.
+        :type symbol: str
         """
         self.__symbol = symbol
 
@@ -21,5 +22,6 @@ class FieldInhabitant:
         """
         Setter for the symbol of the field inhabitant.
         :param symbol: The new symbol for the field inhabitant.
+        :type symbol: str
         """
         self.__symbol = symbol

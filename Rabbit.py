@@ -11,30 +11,11 @@ class Rabbit(Creature):
         """
         Initialize a Rabbit object with specified x and y coordinates.
 
-        :param x: int, the x-coordinate of the Rabbit on the field.
-        :param y: int, the y-coordinate of the Rabbit on the field.
+        :param x: the x-coordinate of the Rabbit on the field.
+        : type x: int
+        :param y: the y-coordinate of the Rabbit on the field.
+        : type y: int
         """
         super().__init__(x, y, "R")  # "R" is the symbol for the Rabbit
 
-    # def move(self, field_size):
-    #     """
-    #     Move the Rabbit randomly to an adjacent position on the field.
 
-    #     :param field_size: tuple, the size of the field as (width, height).
-    #     """
-    #     dx, dy = random.choice([(-1, 0), (1, 0), (0, -1), (0, 1)])  # Randomly choose a direction
-    #     new_x = max(0, min(self.get_x() + dx, field_size[0] - 1))  # Ensure the new position is within the field boundaries
-    #     new_y = max(0, min(self.get_y() + dy, field_size[1] - 1))
-    #     self.set_x(new_x)
-    #     self.set_y(new_y)
-
-    # def interact_with_veggie(self, veggie):
-    #     """
-    #     Define the Rabbit's interaction with a vegetable (e.g., eating it).
-
-    #     :param veggie: Veggie, the vegetable that the Rabbit interacts with.
-    #     """
-    #     # Implementation depends on game rules, e.g., removing the veggie from the field
-    #     pass
-
-    # Additional methods and functionalities specific to the Rabbit can be added here.

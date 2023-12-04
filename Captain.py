@@ -11,8 +11,10 @@ class Captain(Creature):
         """
         Initialize a Captain object with specified x and y coordinates.
         
-        :param x: int, the x-coordinate of the Captain on the field.
-        :param y: int, the y-coordinate of the Captain on the field.
+        :param : the x-coordinate of the Captain on the field.
+        : type x: int
+        :param : the y-coordinate of the Captain on the field.
+        : type y: int
         """
         super().__init__(x, y, "V")  # "V" is the symbol for the Captain
         self.__collected_veggies = []  # A list to store, collected vegetables
@@ -21,7 +23,8 @@ class Captain(Creature):
         """
         Add a Veggie object to the list of collected vegetables.
 
-        :param veggie: Veggie, the vegetable to be added to the collection.
+        :param : Veggie, the vegetable to be added to the collection.
+        : type veggie: Veggie Object
         """
         if isinstance(veggie, Veggie):
             self.__collected_veggies.append(veggie)
@@ -42,13 +45,3 @@ class Captain(Creature):
         
         self.__collected_veggies = self.__collected_veggies[:-5]
             
-
-    # def display_status(self):
-    #     """
-    #     Display the current status of the Captain, including collected veggies.
-    #     """
-    #     print(f"Captain's Position: ({self.get_x()}, {self.get_y()})")
-    #     print("Collected Veggies:")
-    #     for veggie in self.__collected_veggies:
-    #         print(f" - {veggie}")
-
