@@ -59,6 +59,8 @@ class GameEngine:
                         while True:
                             #If a chosen random location is occupied by another Veggie object, repeatedly
                             #choose a new location until an empty location is found
+                            num_of_columns = len(self.__field[0])
+                            num_of_rows = len(self.__field)
                             x, y = random.randint(0, field_dimensions[0] - 1), random.randint(0, field_dimensions[1] - 1)
                             if self.__field[x][y] is None:
                                 self.__field[x][y] = veggie
@@ -72,12 +74,10 @@ class GameEngine:
         Initialize the Captain in the game. A random location is chosen for the Captain object.
         If the chosen location is occupied, a new location is selected until an empty one is found.
         """
-        field_width = len(self.__field)
-        field_height = len(self.__field[0])
-        print(f" wid: {field_width} hei:{field_height}")
+        num_of_cols = len(self.__field)
+        num_of_rows = len(self.__field[0])
         while True:
-            x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
-            print("x, y ",x, "\t",y)
+            x, y = random.randint(0, num_of_cols - 1), random.randint(0, num_of_rows - 1)
             if self.__field[x][y] is None:
                 self.__captain = Captain(x, y)
                 self.__field[x][y] = self.__captain
@@ -89,12 +89,12 @@ class GameEngine:
         If the chosen location is occupied, a new location is selected until an empty one is found.
         The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
         """
-        field_width = len(self.__field)
-        field_height = len(self.__field[0])
+        num_of_cols = len(self.__field)
+        num_of_rows = len(self.__field[0])
 
         for _ in range(GameEngine.__NUMBEROFRABBITS):
             while True:
-                x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
+                x, y = random.randint(0, num_of_cols - 1), random.randint(0, num_of_rows - 1)
                 if self.__field[x][y] is None:
                     rabbit = Rabbit(x, y)
                     self.__rabbits.append(rabbit)
@@ -107,11 +107,11 @@ class GameEngine:
         If the chosen location is occupied, a new location is selected until an empty one is found.
         The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
         """
-        field_width = len(self.__field)
-        field_height = len(self.__field[0])
+        num_of_cols = len(self.__field)
+        num_of_rows = len(self.__field[0])
 
         while True:
-            x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
+            x, y = random.randint(0, num_of_cols - 1), random.randint(0, num_of_rows - 1)
             if self.__field[x][y] is None:
                 self.__snake = Snake(x, y)
                 self.__field[x][y] = self.__snake
@@ -202,15 +202,15 @@ class GameEngine:
         #the rabbit could move 1 space up, down, left, right, any diagonal direction,
         #or possibly not move at all
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1), (0, 0)]  # Includes all 8 directions and no move
-        field_width = len(self.__field)
-        field_height = len(self.__field[0])
+        num_of_cols = len(self.__field)
+        num_of_rows = len(self.__field[0])
 
         for rabbit in self.__rabbits:
             dx, dy = random.choice(directions)
             new_x, new_y = rabbit.get_x() + dx, rabbit.get_y() + dy
             #Rabbit object attempts to move outside the boundaries of field it will
             #forfeit its move
-            if 0 <= new_x < field_width and 0 <= new_y < field_height: # Check for field boundaries
+            if 0 <= new_x < num_of_cols and 0 <= new_y < num_of_rows: # Check for field boundaries
                 # If a Rabbit object attempts to move into a space occupied by another Rabbit
                 # object or a Captain object it will forfeit its move
                 # Check for other Rabbits or the Captain or Snake at the new location
@@ -326,7 +326,7 @@ class GameEngine:
                 self.__score += current_object.get_points()
                 self.__field[new_x][new_y] = self.__captain
                 
-            # Check if new position is empty
+            # None of the objects match and thus the game should be exited
             else:
                 print("Captains movement is incorrect")
                 exit(-1)
@@ -378,16 +378,16 @@ class GameEngine:
         """
         Reset the snake to a new random, unoccupied position on the field.
         """
-        field_width = len(self.__field)
-        field_height = len(self.__field[0])
+        num_of_cols = len(self.__field)
+        num_of_rows = len(self.__field[0])
         
         while True:
-            x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
+            x, y = random.randint(0, num_of_cols - 1), random.randint(0, num_of_rows - 1)
             if self.__field[x][y] is None:
                 if self.__temp is None:
                     self.__field[self.__snake.get_x()][self.__snake.get_y()] = None  # Clear the old position
-                else:
-                    print("Do not clear the old position where captains is ")# self.__field[self.__temp.get_x()][self.__temp.get_y()] = None  # Clear the old position
+                # else if the temp was set to an object then don't clear captain object position
+                
                 self.__snake.set_x(x)
                 self.__snake.set_y(y)
                 self.__field[x][y] = self.__snake
