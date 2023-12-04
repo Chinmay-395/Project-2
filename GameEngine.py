@@ -12,9 +12,9 @@ from Rabbit import Rabbit
 from Snake import Snake
 
 class GameEngine:
-    NUMBEROFVEGGIES = 30
-    NUMBEROFRABBITS = 5
-    HIGHSCOREFILE = "highscore.data"
+    __NUMBEROFVEGGIES = 30
+    __NUMBEROFRABBITS = 5
+    __HIGHSCOREFILE = "highscore.data"
 
     def __init__(self):
         """
@@ -44,9 +44,9 @@ class GameEngine:
                     lines = file.readlines()
                     the_field_line = lines[0].strip().split(',')
                     field_dimensions = [int(the_field_line[1]),int(the_field_line[2])]#the x,y plane
-                    print(f"dimensions: {field_dimensions}")
+                    
                     self.__field = [[None]*field_dimensions[1] for _ in range(field_dimensions[0])]
-                    self.printField()
+                    
                     # Initialize the list of possible vegetables
                     for line in lines[1:]:
                         name, symbol, points = line.strip().split(',')
@@ -54,7 +54,7 @@ class GameEngine:
                         self.__possible_veggies.append(the_veggie_obj)
 
                     # Randomly place vegetables on the field
-                    for _ in range(GameEngine.NUMBEROFVEGGIES):
+                    for _ in range(GameEngine.__NUMBEROFVEGGIES):
                         veggie = random.choice(self.__possible_veggies)
                         while True:
                             #If a chosen random location is occupied by another Veggie object, repeatedly
@@ -63,7 +63,7 @@ class GameEngine:
                             if self.__field[x][y] is None:
                                 self.__field[x][y] = veggie
                                 break
-                    break
+                    break#this will break out of the loop for incorrect file names
             except FileNotFoundError:
                 print("File not found. Please try again.")
 
@@ -92,7 +92,7 @@ class GameEngine:
         field_width = len(self.__field)
         field_height = len(self.__field[0])
 
-        for _ in range(GameEngine.NUMBEROFRABBITS):
+        for _ in range(GameEngine.__NUMBEROFRABBITS):
             while True:
                 x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
                 if self.__field[x][y] is None:
@@ -159,7 +159,8 @@ class GameEngine:
         
         print("List of Possible Vegetables:")
         for veggie in self.__possible_veggies:
-            print(f" - {veggie.get_symbol()}: {veggie.get_name()}, Points: {veggie.get_points()}")
+            print(f"- {veggie.__str__()}")
+            # print(f" - {veggie.get_symbol()}: {veggie.get_name()}, Points: {veggie.get_points()}")
 
         print("\nGame Characters:")
         print(f" - Captain Veggie's Symbol: 'V'")
@@ -182,6 +183,7 @@ class GameEngine:
         
     def getScore(self):
         """
+        This will return the current points earned by the user
         that takes in no parameters and returns the current score
         
         :Returns (int): the current score accumulated by the user
@@ -229,7 +231,19 @@ class GameEngine:
                     rabbit.set_x(new_x)
                     rabbit.set_y(new_y)
                     self.__field[new_x][new_y] = rabbit
+    
     def capMovedIntoSnake(self, x, y):
+        """
+        If the captain object moved into the space of snake, instead of making the spce None
+        it should be stored since snake object currently occupies it. 
+        This is done to avoid disappearnce of snake object when captain moves into it's position
+        
+        :param x: The x cordinate where the captain should move into
+        :type int:
+        :param y: The y cordinate where the captain should move into
+        :type int:
+        :returns: nothing
+        """
         self.__temp = self.__snake
         cap_prev_pos_x = self.__captain.get_x()
         cap_prev_pos_y = self.__captain.get_y()
@@ -273,6 +287,7 @@ class GameEngine:
                 self.__field[new_x][new_y] = self.__captain
 
             else:
+                #this signifies that the position is occupied by object which is not part of the game
                 print("Captain movement is incorrect")
                 exit(-1)
 
@@ -307,7 +322,7 @@ class GameEngine:
                 self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
                 self.__captain.set_y(new_y)
                 self.__captain.addVeggie(current_object)
-                print(f"A delicious vegetable, {current_object.get_name()}, has been found!")
+                print(f"Yummy! A delicious vegetable {current_object.get_name()}")
                 self.__score += current_object.get_points()
                 self.__field[new_x][new_y] = self.__captain
                 
@@ -324,8 +339,9 @@ class GameEngine:
         Prompt the user for a direction to move the Captain (Up, Down, Left, Right).
         Move the Captain based on the user input and the game's rules.
         """
-        direction = input("Move Captain (W/A/S/D): ").upper()
-        while True:#direction in ["W","S","A","D"]:
+        
+        while True:
+            direction = input("Move Captain (W/A/S/D): ").upper()
             if direction == "W":
                 if self.__captain.get_x() -1 >= 0:  # Check if move is within upper boundary
                     self.moveCptVertical(-1)
@@ -465,8 +481,8 @@ class GameEngine:
         high_scores = []
 
         # Check if the highscore file exists and read it
-        if os.path.exists(GameEngine.HIGHSCOREFILE):
-            with open(GameEngine.HIGHSCOREFILE, 'rb') as file:
+        if os.path.exists(GameEngine.__HIGHSCOREFILE):
+            with open(GameEngine.__HIGHSCOREFILE, 'rb') as file:
                 high_scores = pickle.load(file)
 
         # Get player initials
@@ -486,5 +502,5 @@ class GameEngine:
             print(f"{score[0]}: {score[1]}")
 
         # Write the updated high scores back to the file
-        with open(GameEngine.HIGHSCOREFILE, 'wb') as file:
+        with open(GameEngine.__HIGHSCOREFILE, 'wb') as file:
             pickle.dump(high_scores, file)
