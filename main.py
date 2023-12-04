@@ -29,20 +29,14 @@ def main():
 
         # Print out the field
         game.printField()
-        
+        # Move the rabbits
+        game.moveRabbits()
         # Move the captain
-        game.moveCaptain() #ask professor about this
-        
+        game.moveCaptain()
         # Move the snake
         game.moveSnake()
 
-        # Move the rabbits
-        game.moveRabbits()
         
-        
-
-        
-
         # Determine the new number of remaining vegetables
         remaining_veggies = game.remainingVeggies()
 
