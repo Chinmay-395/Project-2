@@ -37,14 +37,16 @@ class GameEngine:
         """
         while True:
             #this is for debugging purposes
-            veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" #currently only for debugging
-            #veggie_file = input("Enter the name of the veggie file: ")
+            # veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" #currently only for debugging
+            veggie_file = input("Enter the name of the veggie file: ")
             try:
                 with open(veggie_file, 'r') as file:
                     lines = file.readlines()
                     the_field_line = lines[0].strip().split(',')
                     field_dimensions = [int(the_field_line[1]),int(the_field_line[2])]#the x,y plane
-                    self.__field = [[None for _ in range(field_dimensions[1])] for _ in range(field_dimensions[0])]
+                    print(f"dimensions: {field_dimensions}")
+                    self.__field = [[None]*field_dimensions[1] for _ in range(field_dimensions[0])]
+                    self.printField()
                     # Initialize the list of possible vegetables
                     for line in lines[1:]:
                         name, symbol, points = line.strip().split(',')
@@ -70,11 +72,12 @@ class GameEngine:
         Initialize the Captain in the game. A random location is chosen for the Captain object.
         If the chosen location is occupied, a new location is selected until an empty one is found.
         """
-        field_width = len(self.__field[0])
-        field_height = len(self.__field)
-
+        field_width = len(self.__field)
+        field_height = len(self.__field[0])
+        print(f" wid: {field_width} hei:{field_height}")
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
+            print("x, y ",x, "\t",y)
             if self.__field[x][y] is None:
                 self.__captain = Captain(x, y)
                 self.__field[x][y] = self.__captain
@@ -86,8 +89,8 @@ class GameEngine:
         If the chosen location is occupied, a new location is selected until an empty one is found.
         The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
         """
-        field_width = len(self.__field[0])
-        field_height = len(self.__field)
+        field_width = len(self.__field)
+        field_height = len(self.__field[0])
 
         for _ in range(GameEngine.NUMBEROFRABBITS):
             while True:
@@ -104,8 +107,8 @@ class GameEngine:
         If the chosen location is occupied, a new location is selected until an empty one is found.
         The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
         """
-        field_width = len(self.__field[0])
-        field_height = len(self.__field)
+        field_width = len(self.__field)
+        field_height = len(self.__field[0])
 
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
@@ -197,8 +200,8 @@ class GameEngine:
         #the rabbit could move 1 space up, down, left, right, any diagonal direction,
         #or possibly not move at all
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1), (0, 0)]  # Includes all 8 directions and no move
-        field_width = len(self.__field[0])
-        field_height = len(self.__field)
+        field_width = len(self.__field)
+        field_height = len(self.__field[0])
 
         for rabbit in self.__rabbits:
             dx, dy = random.choice(directions)
@@ -244,7 +247,7 @@ class GameEngine:
         new_y = self.__captain.get_y() 
         print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
         # Check if new position is within field boundaries
-        if 0 <= new_x < len(self.__field[0]) and 0 <=new_y<len(self.__field):
+        if 0 <= new_x < len(self.__field) and 0 <=new_y<len(self.__field[0]):
             current_object = self.__field[new_x][new_y]
 
             # Check if new position has a Rabbit object
@@ -283,7 +286,7 @@ class GameEngine:
         new_y = self.__captain.get_y()+ horizontal_movement
         print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
         # Check if new position is within field boundaries
-        if 0 <= new_x < len(self.__field[0]) and 0 <=new_y<len(self.__field):
+        if 0 <= new_x < len(self.__field) and 0 <=new_y<len(self.__field[0]):
             current_object = self.__field[new_x][new_y]
             
             # Check if new position has a Rabbit object
@@ -322,30 +325,30 @@ class GameEngine:
         Move the Captain based on the user input and the game's rules.
         """
         direction = input("Move Captain (W/A/S/D): ").upper()
-        while direction in ["W","S","A","D"]:
+        while True:#direction in ["W","S","A","D"]:
             if direction == "W":
-                if self.__captain.get_x() > 0:  # Check if move is within upper boundary
+                if self.__captain.get_x() -1 >= 0:  # Check if move is within upper boundary
                     self.moveCptVertical(-1)
                 else:
                     print("Cannot move that way. The edge of the field is there.")
                 break
 
             elif direction == "S":
-                if self.__captain.get_x() < len(self.__field) - 1:  # Check if move is within lower boundary
+                if self.__captain.get_x() + 1 < len(self.__field):  # Check if move is within lower boundary
                     self.moveCptVertical(1)
                 else:
                     print("Cannot move that way. The edge of the field is there.")
                 break
 
             elif direction == "A":
-                if self.__captain.get_y() > 0:  # Check if move is within left boundary
+                if self.__captain.get_y()-1 >= 0:  # Check if move is within left boundary
                     self.moveCptHorizontal(-1)
                 else:
                     print("Cannot move that way. The edge of the field is there.")
                 break
 
             elif direction == "D":
-                if self.__captain.get_y() < len(self.__field[0]) - 1:  # Check if move is within right boundary
+                if self.__captain.get_y()+1 < len(self.__field[0]):  # Check if move is within right boundary
                     self.moveCptHorizontal(1)
                 else:
                     print("Cannot move that way. The edge of the field is there.")
@@ -359,8 +362,8 @@ class GameEngine:
         """
         Reset the snake to a new random, unoccupied position on the field.
         """
-        field_width = len(self.__field[0])
-        field_height = len(self.__field)
+        field_width = len(self.__field)
+        field_height = len(self.__field[0])
         
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
