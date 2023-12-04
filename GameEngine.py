@@ -228,10 +228,12 @@ class GameEngine:
                     self.__field[new_x][new_y] = rabbit
     def capMovedIntoSnake(self, x, y):
         self.__temp = self.__snake
-        self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+        cap_prev_pos_x = self.__captain.get_x()
+        cap_prev_pos_y = self.__captain.get_y()
         self.__captain.set_x(x)
         self.__captain.set_y(y)
         self.__field[x][y] = self.__captain
+        self.__field[cap_prev_pos_x][cap_prev_pos_y] = None  # Set previous location to None
     def moveCptVertical(self, vertical_movement):
         """
         Move the Captain vertically based on the input movement value.
@@ -250,7 +252,7 @@ class GameEngine:
                 print("You should not step on the rabbits. Stay where you are.")
                 
             elif (isinstance(current_object, Snake)):
-                print("Moved into place occupied by snake.")
+                print("Moved into place occupied by snake.(Vertical)")
                 self.capMovedIntoSnake(new_x,new_y)
                 
             elif (current_object is None):
@@ -267,9 +269,6 @@ class GameEngine:
                 self.__score += current_object.get_points()
                 self.__field[new_x][new_y] = self.__captain
 
-            # Check if new position has a Rabbit object
-            elif isinstance(current_object, Rabbit):
-                print("You should not step on the rabbits. Stay where you are.")
             else:
                 print("Captain movement is incorrect")
                 exit(-1)
@@ -292,7 +291,7 @@ class GameEngine:
                 print("You should not step on the rabbits. Stay where you are.")
                 
             elif isinstance(current_object, Snake):
-                print("Moved into place occupied by snake.")
+                print("Moved into place occupied by snake.(Horizontal)")
                 self.capMovedIntoSnake(new_x,new_y)
                 
             elif (current_object is None):
@@ -362,15 +361,22 @@ class GameEngine:
         """
         field_width = len(self.__field[0])
         field_height = len(self.__field)
-
+        
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
             if self.__field[x][y] is None:
-                self.__field[self.__snake.get_x()][self.__snake.get_y()] = None  # Clear the old position
+                if self.__temp is None:
+                    self.__field[self.__snake.get_x()][self.__snake.get_y()] = None  # Clear the old position
+                else:
+                    print("Do not clear the old position where captains is ")# self.__field[self.__temp.get_x()][self.__temp.get_y()] = None  # Clear the old position
                 self.__snake.set_x(x)
                 self.__snake.set_y(y)
                 self.__field[x][y] = self.__snake
                 break
+        
+        if self.__temp is not None:
+            # self.__snake = self.__temp
+            self.__temp = None
         
     def moveSnake(self):
         """
@@ -409,10 +415,8 @@ class GameEngine:
                 pass
             # If snake moves to captain's position
             elif (isinstance(self.__field[final_x][final_y], Captain)):
-                if final_x == 0 and final_y==0:
-                    if self.__temp is not None:
-                        self.__snake = self.__temp
-                        self.__temp = None
+                #captain moved into the position of snake
+                if min_distance == 0 or ((final_x == self.__captain.get_x()) and (final_y==self.__captain.get_y())):
                     print(f"Cap moved into snake at X:{final_x} Y:{final_y}")
                     
                 else:    
