@@ -252,11 +252,8 @@ class GameEngine:
             elif (isinstance(current_object, Snake)):
                 print("Moved into place occupied by snake.")
                 self.capMovedIntoSnake(new_x,new_y)
-                # pass
                 
-
-            # Check if new position is empty
-            if (current_object is None):
+            elif (current_object is None):
                 self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
                 self.__captain.set_x(new_x)
                 self.__field[new_x][new_y] = self.__captain
@@ -297,8 +294,11 @@ class GameEngine:
             elif isinstance(current_object, Snake):
                 print("Moved into place occupied by snake.")
                 self.capMovedIntoSnake(new_x,new_y)
-                # pass
                 
+            elif (current_object is None):
+                self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+                self.__captain.set_y(new_y)
+                self.__field[new_x][new_y] = self.__captain    
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
@@ -310,11 +310,6 @@ class GameEngine:
                 self.__field[new_x][new_y] = self.__captain
                 
             # Check if new position is empty
-            elif (current_object is None):
-                self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
-                self.__captain.set_y(new_y)
-                self.__field[new_x][new_y] = self.__captain
-                
             else:
                 print("Captains movement is incorrect")
                 exit(-1)
@@ -328,33 +323,37 @@ class GameEngine:
         Move the Captain based on the user input and the game's rules.
         """
         direction = input("Move Captain (W/A/S/D): ").upper()
+        while direction in ["W","S","A","D"]:
+            if direction == "W":
+                if self.__captain.get_x() > 0:  # Check if move is within upper boundary
+                    self.moveCptVertical(-1)
+                else:
+                    print("Cannot move that way. The edge of the field is there.")
+                break
 
-        if direction == "W":
-            if self.__captain.get_x() > 0:  # Check if move is within upper boundary
-                self.moveCptVertical(-1)
+            elif direction == "S":
+                if self.__captain.get_x() < len(self.__field) - 1:  # Check if move is within lower boundary
+                    self.moveCptVertical(1)
+                else:
+                    print("Cannot move that way. The edge of the field is there.")
+                break
+
+            elif direction == "A":
+                if self.__captain.get_y() > 0:  # Check if move is within left boundary
+                    self.moveCptHorizontal(-1)
+                else:
+                    print("Cannot move that way. The edge of the field is there.")
+                break
+
+            elif direction == "D":
+                if self.__captain.get_y() < len(self.__field[0]) - 1:  # Check if move is within right boundary
+                    self.moveCptHorizontal(1)
+                else:
+                    print("Cannot move that way. The edge of the field is there.")
+                break
+
             else:
-                print("Cannot move that way. The edge of the field is there.")
-
-        elif direction == "S":
-            if self.__captain.get_x() < len(self.__field) - 1:  # Check if move is within lower boundary
-                self.moveCptVertical(1)
-            else:
-                print("Cannot move that way. The edge of the field is there.")
-
-        elif direction == "A":
-            if self.__captain.get_y() > 0:  # Check if move is within left boundary
-                self.moveCptHorizontal(-1)
-            else:
-                print("Cannot move that way. The edge of the field is there.")
-
-        elif direction == "D":
-            if self.__captain.get_y() < len(self.__field[0]) - 1:  # Check if move is within right boundary
-                self.moveCptHorizontal(1)
-            else:
-                print("Cannot move that way. The edge of the field is there.")
-
-        else:
-            print("Invalid input. Please use 'W or w', 'A or a', 'S or s', OR 'D or d' for movement.")
+                print("Invalid input. Please use 'W or w', 'A or a', 'S or s', OR 'D or d' for movement.")
 
 
     def resetSnake(self):
