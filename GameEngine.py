@@ -26,6 +26,7 @@ class GameEngine:
         self.__possible_veggies = []  # List of possible Veggie objects in the field
         self.__score = 0  # The player's current score
         self.__snake = None # the snake is a single object in the entire game
+        self.__temp = None # this member variable will store object where-ever location overlap happen
 
         
 
@@ -225,7 +226,12 @@ class GameEngine:
                     rabbit.set_x(new_x)
                     rabbit.set_y(new_y)
                     self.__field[new_x][new_y] = rabbit
-
+    def capMovedIntoSnake(self, x, y):
+        self.__temp = self.__snake
+        self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+        self.__captain.set_x(x)
+        self.__captain.set_y(y)
+        self.__field[x][y] = self.__captain
     def moveCptVertical(self, vertical_movement):
         """
         Move the Captain vertically based on the input movement value.
@@ -243,13 +249,16 @@ class GameEngine:
             if isinstance(current_object, Rabbit):
                 print("You should not step on the rabbits. Stay where you are.")
                 
-            # elif :
-            #     pass
+            elif (isinstance(current_object, Snake)):
+                print("Moved into place occupied by snake.")
+                self.capMovedIntoSnake(new_x,new_y)
+                # pass
+                
 
             # Check if new position is empty
-            if (current_object is None) or (isinstance(current_object, Snake)):
+            if (current_object is None):
                 self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
-                # self.__captain.set_x(new_x)
+                self.__captain.set_x(new_x)
                 self.__field[new_x][new_y] = self.__captain
 
             # Check if new position has a Veggie object
@@ -285,9 +294,11 @@ class GameEngine:
             if isinstance(current_object, Rabbit):
                 print("You should not step on the rabbits. Stay where you are.")
                 
-            # elif isinstance(current_object, Snake):
-            #     pass
-                # print("You should not step on the snake. Stay where you are.")
+            elif isinstance(current_object, Snake):
+                print("Moved into place occupied by snake.")
+                self.capMovedIntoSnake(new_x,new_y)
+                # pass
+                
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
@@ -299,9 +310,9 @@ class GameEngine:
                 self.__field[new_x][new_y] = self.__captain
                 
             # Check if new position is empty
-            elif (current_object is None) or (isinstance(current_object, Snake)):
+            elif (current_object is None):
                 self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
-                # self.__captain.set_y(new_y)
+                self.__captain.set_y(new_y)
                 self.__field[new_x][new_y] = self.__captain
                 
             else:
@@ -376,27 +387,37 @@ class GameEngine:
 
         # Find the move that brings the snake closest to the captain
         for dx, dy in directions:
-            new_x, new_y = self.__snake.get_x() + dx, self.__snake.get_y() + dy
+            if self.__temp is None:
+                new_x, new_y = self.__snake.get_x() + dx, self.__snake.get_y() + dy
+            else:# that means captain moved into the snake position
+                new_x, new_y = self.__temp.get_x() + dx, self.__temp.get_y() + dy
             if 0 <= new_x < len(self.__field) and 0 <= new_y < len(self.__field[0]):  # Check if within field
                 # if not (isinstance(self.__field[new_x][new_y], Veggie) or isinstance(self.__field[new_x][new_y], Rabbit)):
                 distance = abs(new_x - self.__captain.get_x()) + abs(new_y - self.__captain.get_y())
                 if distance < min_distance:
                     min_distance = distance
                     best_move = (new_x, new_y)
+                    
+        
 
         if best_move:
             final_x, final_y = best_move
             #forfiet the move if rabbit and veggie
             print(f"THE NEW LOCATION OF THE SNAKE IS X:{final_x} Y:{final_y}")
             if (isinstance(self.__field[final_x][final_y], Rabbit)) or (isinstance(self.__field[final_x][final_y], Veggie)):
-                # the original position of the 
-                print("snake encounter rabbit/veggie")
                 final_x, final_y = self.__snake.get_x(), self.__snake.get_y()
                 self.__field[final_x][final_y] = self.__snake
                 pass
             # If snake moves to captain's position
             elif (isinstance(self.__field[final_x][final_y], Captain)):
-                print(f"Captain in contact with snake at {final_x} {final_y}")
+                if final_x == 0 and final_y==0:
+                    if self.__temp is not None:
+                        self.__snake = self.__temp
+                        self.__temp = None
+                    print(f"Cap moved into snake at X:{final_x} Y:{final_y}")
+                    
+                else:    
+                    print(f"Snake moved to captain with snake at X:{final_x} Y:{final_y}")
                 the_veggie_list = self.__captain.get_collected_veggies()
                 for _ in range(5):# Removes the last 5 element
                     if len(the_veggie_list)>0:
