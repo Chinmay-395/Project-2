@@ -20,14 +20,14 @@ class GameEngine:
         """
         Initialize the GameEngine with the necessary components for the game.
         """
-        self.field = []  # A 2D list representing the game field
-        self.rabbits = []  # List of Rabbit objects in the game
-        self.captain = None  # A single Captain object
-        self.possible_veggies = []  # List of possible Veggie objects in the field
-        self.score = 0  # The player's current score
-        self.snake = None # the snake is a single object in the entire game
+        self.__field = []  # A 2D list representing the game field
+        self.__rabbits = []  # List of Rabbit objects in the game
+        self.__captain = None  # A single Captain object
+        self.__possible_veggies = []  # List of possible Veggie objects in the field
+        self.__score = 0  # The player's current score
+        self.__snake = None # the snake is a single object in the entire game
 
-        # Additional initialization logic can be added here
+        
 
     def initVeggies(self):
         """
@@ -36,29 +36,29 @@ class GameEngine:
         """
         while True:
             #this is for debugging purposes
-            veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" 
-            #input("Enter the name of the veggie file: ")
+            veggie_file ="/home/chinmay/Coding/Courses/AAI-Engineering-Python/project-2/VeggieFile1.csv" #currently only for debugging
+            #veggie_file = input("Enter the name of the veggie file: ")
             try:
                 with open(veggie_file, 'r') as file:
                     lines = file.readlines()
                     the_field_line = lines[0].strip().split(',')
                     field_dimensions = [int(the_field_line[1]),int(the_field_line[2])]#the x,y plane
-                    self.field = [[None for _ in range(field_dimensions[1])] for _ in range(field_dimensions[0])]
+                    self.__field = [[None for _ in range(field_dimensions[1])] for _ in range(field_dimensions[0])]
                     # Initialize the list of possible vegetables
                     for line in lines[1:]:
                         name, symbol, points = line.strip().split(',')
                         the_veggie_obj = Veggie(name, symbol, int(points))
-                        self.possible_veggies.append(the_veggie_obj)
+                        self.__possible_veggies.append(the_veggie_obj)
 
                     # Randomly place vegetables on the field
                     for _ in range(GameEngine.NUMBEROFVEGGIES):
-                        veggie = random.choice(self.possible_veggies)
+                        veggie = random.choice(self.__possible_veggies)
                         while True:
                             #If a chosen random location is occupied by another Veggie object, repeatedly
                             #choose a new location until an empty location is found
                             x, y = random.randint(0, field_dimensions[0] - 1), random.randint(0, field_dimensions[1] - 1)
-                            if self.field[x][y] is None:
-                                self.field[x][y] = veggie
+                            if self.__field[x][y] is None:
+                                self.__field[x][y] = veggie
                                 break
                     break
             except FileNotFoundError:
@@ -69,14 +69,14 @@ class GameEngine:
         Initialize the Captain in the game. A random location is chosen for the Captain object.
         If the chosen location is occupied, a new location is selected until an empty one is found.
         """
-        field_width = len(self.field[0])
-        field_height = len(self.field)
+        field_width = len(self.__field[0])
+        field_height = len(self.__field)
 
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
-            if self.field[x][y] is None:
-                self.captain = Captain(x, y)
-                self.field[x][y] = self.captain
+            if self.__field[x][y] is None:
+                self.__captain = Captain(x, y)
+                self.__field[x][y] = self.__captain
                 break
 
     def initRabbits(self):
@@ -85,16 +85,16 @@ class GameEngine:
         If the chosen location is occupied, a new location is selected until an empty one is found.
         The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
         """
-        field_width = len(self.field[0])
-        field_height = len(self.field)
+        field_width = len(self.__field[0])
+        field_height = len(self.__field)
 
         for _ in range(GameEngine.NUMBEROFRABBITS):
             while True:
                 x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
-                if self.field[x][y] is None:
+                if self.__field[x][y] is None:
                     rabbit = Rabbit(x, y)
-                    self.rabbits.append(rabbit)
-                    self.field[x][y] = rabbit
+                    self.__rabbits.append(rabbit)
+                    self.__field[x][y] = rabbit
                     break
     
     def initSnake(self):
@@ -103,14 +103,14 @@ class GameEngine:
         If the chosen location is occupied, a new location is selected until an empty one is found.
         The Rabbit objects are then added to a list of Rabbits and assigned to their locations in the field.
         """
-        field_width = len(self.field[0])
-        field_height = len(self.field)
+        field_width = len(self.__field[0])
+        field_height = len(self.__field)
 
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
-            if self.field[x][y] is None:
-                self.snake = Snake(x, y)
-                self.field[x][y] = self.snake
+            if self.__field[x][y] is None:
+                self.__snake = Snake(x, y)
+                self.__field[x][y] = self.__snake
                 break
 
     
@@ -131,7 +131,7 @@ class GameEngine:
         :return: int, the count of remaining Veggie objects.
         """
         count = 0
-        for row in self.field:
+        for row in self.__field:
             for item in row:
                 if isinstance(item, Veggie):
                     count += 1
@@ -154,7 +154,7 @@ class GameEngine:
         print("so go for the high score!")
         
         print("List of Possible Vegetables:")
-        for veggie in self.possible_veggies:
+        for veggie in self.__possible_veggies:
             print(f" - {veggie.get_symbol()}: {veggie.get_name()}, Points: {veggie.get_points()}")
 
         print("\nGame Characters:")
@@ -167,14 +167,14 @@ class GameEngine:
         Display the contents of the field in a 2D grid format with a border around the entire grid.
         """
         # Print the top border
-        print("#" + "#" * (len(self.field[0]) * 2) + "#")
+        print("#" + "#" * (len(self.__field[0]) * 2) + "#")
 
-        for row in self.field:
+        for row in self.__field:
             # Print the row contents with left and right borders
             print("#" + " ".join(item.get_symbol() if item else " " for item in row) + "#")
 
         # Print the bottom border
-        print("#" + "#" * (len(self.field[0]) * 2) + "#")
+        print("#" + "#" * (len(self.__field[0]) * 2) + "#")
         
     def getScore(self):
         """
@@ -182,10 +182,10 @@ class GameEngine:
         
         :Returns (int): the current score accumulated by the user
         """
-        # for veg in self.captain.get_collected_veggies():
+        # for veg in self.__captain.get_collected_veggies():
         #     if isinstance(veg, Veggie):
-        #         self.score += veg.get_points()
-        return self.score
+        #         self.__score += veg.get_points()
+        return self.__score
 
     def moveRabbits(self):
         """
@@ -196,10 +196,10 @@ class GameEngine:
         #the rabbit could move 1 space up, down, left, right, any diagonal direction,
         #or possibly not move at all
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1), (0, 0)]  # Includes all 8 directions and no move
-        field_width = len(self.field[0])
-        field_height = len(self.field)
+        field_width = len(self.__field[0])
+        field_height = len(self.__field)
 
-        for rabbit in self.rabbits:
+        for rabbit in self.__rabbits:
             dx, dy = random.choice(directions)
             new_x, new_y = rabbit.get_x() + dx, rabbit.get_y() + dy
             #Rabbit object attempts to move outside the boundaries of field it will
@@ -208,23 +208,23 @@ class GameEngine:
                 # If a Rabbit object attempts to move into a space occupied by another Rabbit
                 # object or a Captain object it will forfeit its move
                 # Check for other Rabbits or the Captain or Snake at the new location
-                if not (isinstance(self.field[new_x][new_y], Rabbit) or 
-                        isinstance(self.field[new_x][new_y], Captain) or 
-                        isinstance(self.field[new_x][new_y], Snake)
+                if not (isinstance(self.__field[new_x][new_y], Rabbit) or 
+                        isinstance(self.__field[new_x][new_y], Captain) or 
+                        isinstance(self.__field[new_x][new_y], Snake)
                         ):
                     # If a Rabbit object moves into a space occupied by a Veggie object, that
                     # Veggie object is removed from field, and the Rabbit object will take its
                     # place in field
                     # If moving to a Veggie, remove it from the field
-                    if isinstance(self.field[new_x][new_y], Veggie):
+                    if isinstance(self.__field[new_x][new_y], Veggie):
                         print(f"RABBIT ATE THE VEGGIE AT X:{new_x} and Y:{new_y}")
-                        self.field[new_x][new_y] = None
+                        self.__field[new_x][new_y] = None
 
                     # Move the rabbit
-                    self.field[rabbit.get_x()][rabbit.get_y()] = None  # Set previous location to None
+                    self.__field[rabbit.get_x()][rabbit.get_y()] = None  # Set previous location to None
                     rabbit.set_x(new_x)
                     rabbit.set_y(new_y)
-                    self.field[new_x][new_y] = rabbit
+                    self.__field[new_x][new_y] = rabbit
 
     def moveCptVertical(self, vertical_movement):
         """
@@ -232,12 +232,12 @@ class GameEngine:
         
         :param vertical_movement: int, the vertical movement value for the Captain.
         """
-        new_x = self.captain.get_x()+ vertical_movement
-        new_y = self.captain.get_y() 
+        new_x = self.__captain.get_x()+ vertical_movement
+        new_y = self.__captain.get_y() 
 
         # Check if new position is within field boundaries
-        if 0 <= new_x < len(self.field[0]) and 0 <=new_y<len(self.field):
-            current_object = self.field[new_x][new_y]
+        if 0 <= new_x < len(self.__field[0]) and 0 <=new_y<len(self.__field):
+            current_object = self.__field[new_x][new_y]
 
             # Check if new position has a Rabbit object
             if isinstance(current_object, Rabbit):
@@ -248,18 +248,18 @@ class GameEngine:
 
             # Check if new position is empty
             if current_object is None:
-                self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
-                self.captain.set_x(new_x)
-                self.field[new_x][new_y] = self.captain
+                self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+                self.__captain.set_x(new_x)
+                self.__field[new_x][new_y] = self.__captain
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
-                self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
-                self.captain.set_x(new_x)
-                self.captain.addVeggie(current_object)
+                self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+                self.__captain.set_x(new_x)
+                self.__captain.addVeggie(current_object)
                 print(f"Yummy! A delicious vegetable {current_object.get_name()}")
-                # self.score += current_object.get_points()
-                self.field[new_x][new_y] = self.captain
+                self.__score += current_object.get_points()
+                self.__field[new_x][new_y] = self.__captain
 
             # Check if new position has a Rabbit object
             elif isinstance(current_object, Rabbit):
@@ -274,12 +274,12 @@ class GameEngine:
         
         :param horizontal_movement: int, the horizontal movement value for the Captain.
         """
-        new_x = self.captain.get_x() 
-        new_y = self.captain.get_y()+ horizontal_movement
+        new_x = self.__captain.get_x() 
+        new_y = self.__captain.get_y()+ horizontal_movement
 
         # Check if new position is within field boundaries
-        if 0 <= new_x < len(self.field[0]) and 0 <=new_y<len(self.field):
-            current_object = self.field[new_x][new_y]
+        if 0 <= new_x < len(self.__field[0]) and 0 <=new_y<len(self.__field):
+            current_object = self.__field[new_x][new_y]
             
             # Check if new position has a Rabbit object
             if isinstance(current_object, Rabbit):
@@ -291,18 +291,18 @@ class GameEngine:
 
             # Check if new position has a Veggie object
             elif isinstance(current_object, Veggie):
-                self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
-                self.captain.set_y(new_y)
-                self.captain.addVeggie(current_object)
+                self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+                self.__captain.set_y(new_y)
+                self.__captain.addVeggie(current_object)
                 print(f"A delicious vegetable, {current_object.get_name()}, has been found!")
-                # self.score += current_object.get_points()
-                self.field[new_x][new_y] = self.captain
+                self.__score += current_object.get_points()
+                self.__field[new_x][new_y] = self.__captain
                 
             # Check if new position is empty
             elif current_object is None:
-                self.field[self.captain.get_x()][self.captain.get_y()] = None  # Set previous location to None
-                self.captain.set_y(new_y)
-                self.field[new_x][new_y] = self.captain
+                self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
+                self.__captain.set_y(new_y)
+                self.__field[new_x][new_y] = self.__captain
                 
             else:
                 print("Captains movement is incorrect")
@@ -319,25 +319,25 @@ class GameEngine:
         direction = input("Move Captain (W/A/S/D): ").upper()
 
         if direction == "W":
-            if self.captain.get_x() > 0:  # Check if move is within upper boundary
+            if self.__captain.get_x() > 0:  # Check if move is within upper boundary
                 self.moveCptVertical(-1)
             else:
                 print("Cannot move that way. The edge of the field is there.")
 
         elif direction == "S":
-            if self.captain.get_x() < len(self.field) - 1:  # Check if move is within lower boundary
+            if self.__captain.get_x() < len(self.__field) - 1:  # Check if move is within lower boundary
                 self.moveCptVertical(1)
             else:
                 print("Cannot move that way. The edge of the field is there.")
 
         elif direction == "A":
-            if self.captain.get_y() > 0:  # Check if move is within left boundary
+            if self.__captain.get_y() > 0:  # Check if move is within left boundary
                 self.moveCptHorizontal(-1)
             else:
                 print("Cannot move that way. The edge of the field is there.")
 
         elif direction == "D":
-            if self.captain.get_y() < len(self.field[0]) - 1:  # Check if move is within right boundary
+            if self.__captain.get_y() < len(self.__field[0]) - 1:  # Check if move is within right boundary
                 self.moveCptHorizontal(1)
             else:
                 print("Cannot move that way. The edge of the field is there.")
@@ -350,16 +350,16 @@ class GameEngine:
         """
         Reset the snake to a new random, unoccupied position on the field.
         """
-        field_width = len(self.field[0])
-        field_height = len(self.field)
+        field_width = len(self.__field[0])
+        field_height = len(self.__field)
 
         while True:
             x, y = random.randint(0, field_width - 1), random.randint(0, field_height - 1)
-            if self.field[x][y] is None:
-                self.field[self.snake.get_x()][self.snake.get_y()] = None  # Clear the old position
-                self.snake.set_x(x)
-                self.snake.set_y(y)
-                self.field[x][y] = self.snake
+            if self.__field[x][y] is None:
+                self.__field[self.__snake.get_x()][self.__snake.get_y()] = None  # Clear the old position
+                self.__snake.set_x(x)
+                self.__snake.set_y(y)
+                self.__field[x][y] = self.__snake
                 break
         
     def moveSnake(self):
@@ -376,10 +376,10 @@ class GameEngine:
 
         # Find the move that brings the snake closest to the captain
         for dx, dy in directions:
-            new_x, new_y = self.snake.get_x() + dx, self.snake.get_y() + dy
-            if 0 <= new_x < len(self.field) and 0 <= new_y < len(self.field[0]):  # Check if within field
-                # if not (isinstance(self.field[new_x][new_y], Veggie) or isinstance(self.field[new_x][new_y], Rabbit)):
-                distance = abs(new_x - self.captain.get_x()) + abs(new_y - self.captain.get_y())
+            new_x, new_y = self.__snake.get_x() + dx, self.__snake.get_y() + dy
+            if 0 <= new_x < len(self.__field) and 0 <= new_y < len(self.__field[0]):  # Check if within field
+                # if not (isinstance(self.__field[new_x][new_y], Veggie) or isinstance(self.__field[new_x][new_y], Rabbit)):
+                distance = abs(new_x - self.__captain.get_x()) + abs(new_y - self.__captain.get_y())
                 if distance < min_distance:
                     min_distance = distance
                     best_move = (new_x, new_y)
@@ -388,30 +388,30 @@ class GameEngine:
             final_x, final_y = best_move
             #forfiet the move if rabbit and veggie
             print(f"THE NEW LOCATION OF THE SNAKE IS X:{final_x} Y:{final_y}")
-            if (isinstance(self.field[final_x][final_y], Rabbit)) or (isinstance(self.field[final_x][final_y], Veggie)):
+            if (isinstance(self.__field[final_x][final_y], Rabbit)) or (isinstance(self.__field[final_x][final_y], Veggie)):
                 # the original position of the 
                 print("snake encounter rabbit/veggie")
-                final_x, final_y = self.snake.get_x(), self.snake.get_y()
-                self.field[final_x][final_y] = self.snake
+                final_x, final_y = self.__snake.get_x(), self.__snake.get_y()
+                self.__field[final_x][final_y] = self.__snake
                 pass
             # If snake moves to captain's position
-            elif (isinstance(self.field[final_x][final_y], Captain)):
+            elif (isinstance(self.__field[final_x][final_y], Captain)):
                 print(f"Captain in contact with snake at {final_x} {final_y}")
-                the_veggie_list = self.captain.get_collected_veggies()
+                the_veggie_list = self.__captain.get_collected_veggies()
                 for _ in range(5):# Removes the last 5 element
                     if len(the_veggie_list)>0:
                         the_dropped_veg = the_veggie_list.pop()  
-                        self.score -= the_dropped_veg.get_points()
+                        self.__score -= the_dropped_veg.get_points()
                         print(f"Dropped veggie {the_dropped_veg} ")
-                self.captain.dropVeggie()  # Remove the last 5 veggies
+                self.__captain.dropVeggie()  # Remove the last 5 veggies
                 
                 self.resetSnake()  # to reset snake to a new random position
             else: # the only thing that is remaining is None in the else case
                 # Move the snake
-                self.field[self.snake.get_x()][self.snake.get_y()] = None  # Clear the old position
-                self.snake.set_x(final_x)
-                self.snake.set_y(final_y)
-                self.field[final_x][final_y] = self.snake
+                self.__field[self.__snake.get_x()][self.__snake.get_y()] = None  # Clear the old position
+                self.__snake.set_x(final_x)
+                self.__snake.set_y(final_y)
+                self.__field[final_x][final_y] = self.__snake
                     
                         
     def gameOver(self):
@@ -422,13 +422,13 @@ class GameEngine:
         print("Congratulations on completing the game.")
         print("\nVegetables Harvested:")
 
-        if self.captain.get_collected_veggies():
-            for veggie in self.captain.get_collected_veggies():
+        if self.__captain.get_collected_veggies():
+            for veggie in self.__captain.get_collected_veggies():
                 print(f" - {veggie.get_name()}")
         else:
             print("No vegetables were harvested.")
 
-        print(f"\nYour Final Score: {self.score}")
+        print(f"\nYour Final Score: {self.__score}")
 
     def highScore(self):
         """
@@ -446,7 +446,7 @@ class GameEngine:
         initials = input("Enter your initials: ")[:3]
 
         # Update the high scores list
-        new_score = (initials, self.score)
+        new_score = (initials, self.__score)
         if not high_scores:
             high_scores.append(new_score)
         else:
