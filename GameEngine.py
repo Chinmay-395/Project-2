@@ -234,7 +234,7 @@ class GameEngine:
         """
         new_x = self.__captain.get_x()+ vertical_movement
         new_y = self.__captain.get_y() 
-
+        print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
         # Check if new position is within field boundaries
         if 0 <= new_x < len(self.__field[0]) and 0 <=new_y<len(self.__field):
             current_object = self.__field[new_x][new_y]
@@ -243,13 +243,13 @@ class GameEngine:
             if isinstance(current_object, Rabbit):
                 print("You should not step on the rabbits. Stay where you are.")
                 
-            elif isinstance(current_object, Snake):
-                pass
+            # elif :
+            #     pass
 
             # Check if new position is empty
-            if current_object is None:
+            if (current_object is None) or (isinstance(current_object, Snake)):
                 self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
-                self.__captain.set_x(new_x)
+                # self.__captain.set_x(new_x)
                 self.__field[new_x][new_y] = self.__captain
 
             # Check if new position has a Veggie object
@@ -276,7 +276,7 @@ class GameEngine:
         """
         new_x = self.__captain.get_x() 
         new_y = self.__captain.get_y()+ horizontal_movement
-
+        print(f"CAPS NEW POS X: {new_x} Y:{new_y}")
         # Check if new position is within field boundaries
         if 0 <= new_x < len(self.__field[0]) and 0 <=new_y<len(self.__field):
             current_object = self.__field[new_x][new_y]
@@ -285,8 +285,8 @@ class GameEngine:
             if isinstance(current_object, Rabbit):
                 print("You should not step on the rabbits. Stay where you are.")
                 
-            elif isinstance(current_object, Snake):
-                pass
+            # elif isinstance(current_object, Snake):
+            #     pass
                 # print("You should not step on the snake. Stay where you are.")
 
             # Check if new position has a Veggie object
@@ -299,9 +299,9 @@ class GameEngine:
                 self.__field[new_x][new_y] = self.__captain
                 
             # Check if new position is empty
-            elif current_object is None:
+            elif (current_object is None) or (isinstance(current_object, Snake)):
                 self.__field[self.__captain.get_x()][self.__captain.get_y()] = None  # Set previous location to None
-                self.__captain.set_y(new_y)
+                # self.__captain.set_y(new_y)
                 self.__field[new_x][new_y] = self.__captain
                 
             else:
@@ -370,7 +370,7 @@ class GameEngine:
         captain, the captain loses the last five vegetables that were added to their basket and the snake is
         reset to a new random, unoccupied position on the field.
         """
-        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        directions = [(0, -1), (0, 1), (-1, 0), (1, 0),(0,0)]
         best_move = None
         min_distance = 1e9
 
